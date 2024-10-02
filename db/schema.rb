@@ -14,32 +14,21 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_02_075143) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "entities", force: :cascade do |t|
-    t.string "type"
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "transactions", force: :cascade do |t|
     t.bigint "wallet_id"
-    t.string "entity_type"
-    t.bigint "entity_id"
     t.string "transactions_type"
     t.decimal "amount", precision: 10, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["entity_type", "entity_id"], name: "index_transactions_on_entity"
     t.index ["wallet_id"], name: "index_transactions_on_wallet_id"
   end
 
   create_table "wallets", force: :cascade do |t|
-    t.string "entity_type"
-    t.bigint "entity_id"
+    t.string "type"
+    t.string "name"
     t.decimal "balance", precision: 10, scale: 2, default: "0.0"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["entity_type", "entity_id"], name: "index_wallets_on_entity"
   end
 
 end
