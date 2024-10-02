@@ -1,2 +1,2 @@
-class User < Entity
+class User < Wallet
 end

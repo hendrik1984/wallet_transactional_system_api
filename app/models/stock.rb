@@ -1,2 +1,2 @@
-class Stock < Entity
+class Stock < Wallet
 end

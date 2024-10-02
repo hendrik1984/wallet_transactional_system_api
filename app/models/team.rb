@@ -1,2 +1,2 @@
-class Team < Entity
+class Team < Wallet
 end
