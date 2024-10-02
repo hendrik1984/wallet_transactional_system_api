@@ -1,3 +1,3 @@
-class Wallet < Entity
-  belongs_to :entity, polymorphic: true
+class Wallet < ApplicationRecord
+  
 end
