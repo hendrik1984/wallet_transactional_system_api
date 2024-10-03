@@ -1,5 +1,5 @@
 class Api::V1::TransactionsController < ApplicationController
-  before_action :validate_params, only: %i[create]
+  before_action :field_allowed, only: %i[create]
   before_action :set_wallet, only: %i[show create]
   
   def index
@@ -37,10 +37,10 @@ class Api::V1::TransactionsController < ApplicationController
   end
 
   def transaction_params
-    params.permit(:wallet_id, :amount, :transactions_type)
+    params.required(:transaction).permit(:wallet_id, :amount, :transactions_type)
   end
 
-  def validate_params
+  def field_allowed
     list_params = [:wallet_id, :amount, :transactions_type]
     list_params.each do |list|
       unless params.include?(list)
