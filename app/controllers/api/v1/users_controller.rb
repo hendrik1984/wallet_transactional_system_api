@@ -29,12 +29,15 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def user_params
-    params.permit(:name)
+    params.required(:user).permit(:name)
   end
 
   def fields_allowed
-    if params[:name].blank?
-      render json: JsonCustomResponse.reformat("", "Field [name] is required, please check again", 422)
+    list_params = [:name]
+    list_params.each do |list|
+      unless params.include?(list)
+        render json: JsonCustomResponse.reformat("", "Field '#{list}' is required, please check again", 422), status: :unprocessable_entity 
+      end
     end
   end
 end
