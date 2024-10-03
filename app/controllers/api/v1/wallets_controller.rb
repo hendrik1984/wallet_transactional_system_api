@@ -3,27 +3,20 @@ class Api::V1::WalletsController < ApplicationController
   
   def index
     @wallets = Wallet.all
-    render json: @wallets
+    render json: JsonCustomResponse.reformat(@wallets, '', 200), status: :ok
   end
 
   def show
-    render json: @wallet
+    render json: JsonCustomResponse.reformat(@wallet, '', 200), status: :ok
   end
-
-  # def create
-  #   begin
-  #     @wallet = Wallet.create!(name: params[:name])
-  #     render json: @wallet
-  #   rescue => e
-  #     render json: "Error occured with message #{e.message}".to_json
-  #   end
-  # end
 
   private
 
   def set_wallet
-    @wallet = Wallet.find(params[:id])
+    begin
+      @wallet = Wallet.find(params[:id])
+    rescue => e
+      render json: JsonCustomResponse.reformat('', e.message, 422), status: :unprocessable_entity
+    end
   end
-  
-  
 end
