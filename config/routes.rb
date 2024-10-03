@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :users, path: 'wallet/users'
+      resources :teams, path: 'wallet/teams'
+      resources :stocks, path: 'wallet/stocks'
       resources :transactions
       resources :wallets
       resources :transactions
