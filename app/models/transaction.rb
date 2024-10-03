@@ -1,21 +1,38 @@
 class Transaction < ApplicationRecord
+  # relationships
   belongs_to :wallet
 
-  validates :wallet_id, presence: true
-  validates :amount, presence: true, numericality: { greater_than_or_equal_to: 0}
+  # validations
+  validates :amount, presence: true, numericality: { greater_than: 0}
   validates :amount, numericality: true
-  # validates :transactions_type, presence: true, inclusion: { in: %w["Credit" "Withdraw"], message: "%{value} is not a valid transaction type" }
 
+  # custom validations
   validate :amount_types_process
+  before_save :check_balance
+  after_save :calculate_balance
 
   private
+
   def amount_types_process
     if transactions_type == 'Withdraw'
       self.amount = -amount
+      check_balance
     elsif transactions_type == 'Credit'
       self.amount = amount
     else
       errors.add(:type, "is invalid")
     end
+  end
+
+  def check_balance
+    if self.transactions_type == 'Withdraw'
+      if (wallet.balance + self.amount) < 0
+        raise 'Balance Insufficient'
+      end
+    end
+  end
+
+  def calculate_balance
+    wallet.update!(balance: wallet.transactions.sum(:amount))
   end
 end
