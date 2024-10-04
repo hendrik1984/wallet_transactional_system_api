@@ -11,6 +11,4 @@ class Wallet < ApplicationRecord
   def withdraw(amount, message)
     return self.transactions.create!(wallet_id: self.id, amount: amount, transactions_type: "Withdraw", message: message)
   end
-
-
 end
