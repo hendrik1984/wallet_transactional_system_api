@@ -8,8 +8,17 @@ Rails.application.routes.draw do
       resources :users, path: 'wallet/users'
       resources :teams, path: 'wallet/teams'
       resources :stocks, path: 'wallet/stocks'
+      
       resources :transactions
-      resources :wallets
+      
+      resources :wallets do
+        member do
+          post 'deposit'
+          post 'withdraw'
+          post 'transfer'
+        end
+      end
+
       resources :transactions
     end
   end
