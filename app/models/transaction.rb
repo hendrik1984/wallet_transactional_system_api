@@ -8,10 +8,15 @@ class Transaction < ApplicationRecord
 
   # custom validations
   validate :amount_types_process
+  validate :safe_message
   before_save :check_balance
   after_save :calculate_balance
 
   private
+
+  def safe_message
+    self.message = CGI.escapeHTML(message)
+  end
 
   def amount_types_process
     if transactions_type == 'Withdraw'
