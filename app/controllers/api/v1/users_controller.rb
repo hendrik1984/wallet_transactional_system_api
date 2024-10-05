@@ -1,10 +1,11 @@
 class Api::V1::UsersController < ApplicationController
+  before_action :authorization, only: %i[index show create set_user]
   before_action :set_user, only: %i[show]
-  before_action :fields_allowed
+  before_action :fields_allowed, only: %i[create]
   
   def index
     @users = User.all
-    render json: JsonCustomResponse.reformat(@user, "", 200), status: :ok
+    render json: JsonCustomResponse.reformat(@users, "", 200), status: :ok
   end
 
   def show
@@ -25,7 +26,11 @@ class Api::V1::UsersController < ApplicationController
   private
 
   def set_user
-    @user = User.find(params[:id])
+    begin
+      @user = User.find(params[:id])
+    rescue => e
+      render json: JsonCustomResponse.reformat("", e.message, 422), status: :unprocessable_entity
+    end
   end
 
   def user_params

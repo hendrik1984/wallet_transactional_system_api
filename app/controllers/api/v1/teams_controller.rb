@@ -1,4 +1,5 @@
 class Api::V1::TeamsController < ApplicationController
+  before_action :authorization, only: %i[index show create]
   before_action :set_team, only: %i[show]
   before_action :fields_allowed, only: %i[create]
   
