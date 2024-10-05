@@ -1,10 +1,10 @@
 class Api::V1::StocksController < ApplicationController
-  before_action :authorization, only: %i[index show create]
+  before_action :authorization, only: %i[index show create set_stock]
   before_action :set_stock, only: %i[show]
   before_action :fields_allowed, only: %i[create]
   
   def index
-    @stock = Stock.all
+    @stocks = Stock.all
     render json: JsonCustomResponse.reformat(@stocks, "", 200), status: :ok
   end
 
@@ -15,7 +15,7 @@ class Api::V1::StocksController < ApplicationController
   def create
     begin
       ActiveRecord::Base.transaction do
-        @stock = Stock.create!(team_params)
+        @stock = Stock.create!(stock_params)
         render json: JsonCustomResponse.reformat(@stock, "", 201), status: :created
       end
     rescue => e
@@ -25,12 +25,16 @@ class Api::V1::StocksController < ApplicationController
 
   private
 
-  def set_team
-    @stock = Stock.find(params[:id])
+  def set_stock
+    begin
+      @stock = Stock.find(params[:id])
+    rescue => e
+      render json: JsonCustomResponse.reformat("", e.message, 422), status: :unprocessable_entity
+    end
   end
 
   def stock_params
-    params.required(:team).permit(:name)
+    params.required(:stock).permit(:name)
   end
 
   def fields_allowed
