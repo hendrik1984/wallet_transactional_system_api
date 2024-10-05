@@ -1,4 +1,5 @@
 class Api::V1::WalletsController < ApplicationController
+  before_action :authorization, only: %i[index show deposit withdraw transfer set_wallet]
   before_action :set_wallet, only: %i[show deposit withdraw transfer]
   
   def index
