@@ -1,4 +1,5 @@
 class Api::V1::TransactionsController < ApplicationController
+  before_action :authorization, only: %i[index show]
   before_action :set_wallet, only: %i[show]
   
   def index
