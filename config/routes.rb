@@ -5,12 +5,14 @@ Rails.application.routes.draw do
   # root "articles#index"
   namespace :api do
     namespace :v1 do
-      resources :sessions, only: [:create]
+      get 'latest_stock_prices/price'
+      get 'latest_stock_prices/prices'
+      get 'latest_stock_prices/price_all'
 
+      resources :sessions, only: [:create]
       resources :users, path: 'wallet/users'
       resources :teams, path: 'wallet/teams'
       resources :stocks, path: 'wallet/stocks'
-      
       resources :transactions
       
       resources :wallets do
