@@ -19,7 +19,7 @@ module SessionSignature
 
     secret_key = self.get_secret_key
     key, time = Base64.urlsafe_decode64(token).split(':')
-
+    
     # Token data Expired time not found
     raise "Token Invalid" if time.nil?
 

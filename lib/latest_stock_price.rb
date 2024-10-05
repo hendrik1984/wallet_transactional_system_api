@@ -10,7 +10,7 @@ module LatestStockPrice
     end
 
     def price(symbol)
-      url = URI("#{@base_url}/equities-search")
+      url = URI("#{@base_url}/equities-search?Symbols=#{symbol}")
 
       http = Net::HTTP.new(url.host, url.port)
       http.use_ssl = true
@@ -24,7 +24,7 @@ module LatestStockPrice
     end
 
     def prices(symbols)
-      url = URI("#{@base_url}/equities-enhanced")
+      url = URI("#{@base_url}/equities-enhanced?Symbols=#{symbols}")
 
       http = Net::HTTP.new(url.host, url.port)
       http.use_ssl = true

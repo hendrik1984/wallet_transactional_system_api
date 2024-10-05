@@ -37,3 +37,25 @@ Response:
 after that use the data 'response_token' and fill into api headers Authorization to access the api. 
 
 Token is have a timeout 30 minutes and can be configuration in Rails credential file
+
+
+Latest Stock Price API
+* Api will Contain 3 apis to call, Price, Prices and Price_all
+
+* Every api must have a headers Authorization and x-rapidapi-key to make a request
+
+* list API url
+** price: localhost:3000/api/v1/latest_stock_prices/price
+** price: localhost:3000/api/v1/latest_stock_prices/prices
+** price: localhost:3000/api/v1/latest_stock_prices/price_all
+
+* For api price and prices need to send params
+**sample params prices
+**{
+**  "symbols": "TATADVRA.NS,GODRCONS.NS,TVSMOTO.NS"
+**}
+
+**sample params prices
+**{
+**  "symbols": "TATADVRA.NS"
+**}

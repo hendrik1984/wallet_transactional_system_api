@@ -1,5 +1,5 @@
 class Api::V1::TeamsController < ApplicationController
-  before_action :authorization, only: %i[index show create]
+  before_action :authorization, only: %i[index show create set_team]
   before_action :set_team, only: %i[show]
   before_action :fields_allowed, only: %i[create]
   
@@ -26,7 +26,11 @@ class Api::V1::TeamsController < ApplicationController
   private
 
   def set_team
-    @team = Team.find(params[:id])
+    begin
+      @team = Team.find(params[:id])
+    rescue => e
+      render json: JsonCustomResponse.reformat("", e.message, 422), status: :unprocessable_entity
+    end
   end
 
   def team_params
