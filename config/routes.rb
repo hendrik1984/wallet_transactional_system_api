@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   # root "articles#index"
   namespace :api do
     namespace :v1 do
+      resources :sessions, only: [:create]
+
       resources :users, path: 'wallet/users'
       resources :teams, path: 'wallet/teams'
       resources :stocks, path: 'wallet/stocks'
@@ -18,8 +20,7 @@ Rails.application.routes.draw do
           post 'transfer'
         end
       end
-
-      resources :transactions
+      
     end
   end
 end
