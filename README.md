@@ -38,6 +38,9 @@ after that use the data 'response_token' and fill into api headers Authorization
 
 * Token is have a timeout 30 minutes and can be configuration in Rails credential file
 
+## For Wallet API
+* Find it in this project and import using postman file name: wallet_api.postman_collection.json
+
 ## Latest Stock Price API
 
 * Api will Contain 3 apis to call, Price, Prices and Price_all
@@ -47,8 +50,6 @@ after that use the data 'response_token' and fill into api headers Authorization
 * price: localhost:3000/api/v1/latest_stock_prices/price
 * price: localhost:3000/api/v1/latest_stock_prices/prices
 * price: localhost:3000/api/v1/latest_stock_prices/price_all
-
-  
 
 ### For api price and prices need to send params
 
